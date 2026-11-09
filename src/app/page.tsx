@@ -12,7 +12,6 @@ export default async function HomePage() {
   const snapshot = await getPublishedSnapshot();
   const { sections, projects, categories } = snapshot;
   const profileUrl = sections.hero.profileMediaId ? `/api/media/${sections.hero.profileMediaId}` : sections.hero.profileFallbackUrl;
-  const resumeUrl = sections.resume.mediaId ? `/api/media/${sections.resume.mediaId}?download=1` : sections.resume.fallbackUrl;
   const featured = projects.filter((project) => project.featured).slice(0, 8);
   const remaining = projects.filter((project) => !featured.some((item) => item.id === project.id));
   const portfolioProjects = [...featured, ...remaining];
@@ -28,7 +27,6 @@ export default async function HomePage() {
         <nav aria-label="Primary navigation">
           {sections.navigation.items.filter((item) => item.visible).map((item) => <a key={item.id} href={item.href}>{item.label}</a>)}
         </nav>
-        <a className="header-resume" href={resumeUrl} download>{sections.navigation.resumeLabel}</a>
         <ScrollProgress />
       </header>
 
@@ -38,7 +36,7 @@ export default async function HomePage() {
           <h1>{sections.hero.title}</h1>
           <p className="positioning">{sections.hero.positioning}</p>
           <p className="hero-intro">{sections.hero.introduction}</p>
-          <div className="hero-actions"><a className="primary-button" href="#work">{sections.hero.primaryButtonLabel}</a><a className="outline-button" href={resumeUrl} download>{sections.hero.resumeButtonLabel}</a></div>
+          <div className="hero-actions"><a className="primary-button" href="#work">{sections.hero.primaryButtonLabel}</a></div>
           <dl className="hero-facts"><div><dt>Experience</dt><dd>24 years</dd></div><div><dt>UAE practice</dt><dd>21 years</dd></div><div><dt>Based in</dt><dd>{sections.hero.location}</dd></div></dl>
         </div>
         <div className="portrait-frame" data-parallax data-parallax-speed="0.06" data-parallax-max="42"><Image src={profileUrl} alt="Liju Pankaj, Senior Graphic Designer" width={900} height={1125} priority sizes="(max-width: 620px) 90vw, (max-width: 900px) 440px, 28vw" /></div>
