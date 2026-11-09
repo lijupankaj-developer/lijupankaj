@@ -17,7 +17,8 @@
     "test:watch": "vitest",
     "migrate": "node --env-file-if-exists=.env.local scripts/migrate.mjs",
     "admin:provision": "node --env-file-if-exists=.env.local scripts/provision-admin.mjs",
-    "admin:reset-password": "node --env-file-if-exists=.env.local scripts/reset-admin-password.mjs"
+    "admin:reset-password": "node --env-file-if-exists=.env.local scripts/reset-admin-password.mjs",
+    "admin:reset-mfa": "node --env-file-if-exists=.env.local scripts/reset-admin-mfa.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "0.12.5",

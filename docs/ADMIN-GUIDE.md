@@ -85,6 +85,10 @@ Keep no more than four applications featured initially; the remaining cards are 
 
 ## Sign-out and account security
 
+**Two-factor authentication (required since 9 November 2026).** After the password, the CMS asks for a 6-digit code from an authenticator app (Google Authenticator, Microsoft Authenticator, 1Password, Apple Passwords, etc.). On the first sign-in it shows a QR code to scan once. Without a valid code the session cannot open `/admin`, call any `/api/admin/*` route, change the password, or read draft data and private media: the database policy (`public.is_cms_admin()`) only accepts two-factor (`aal2`) sessions. Phone/SMS factors stay disabled.
+
+If the authenticator device is lost, open the application terminal in Coolify and run `npm run admin:reset-mfa`. It removes every factor from the approved administrator only; the next sign-in shows the QR setup again.
+
 - Sign out from the lower-left account control when using a shared device.
 - Never share a Supabase secret key or database password.
 - Do not create extra Supabase users. An Auth user also needs a matching `admin_users` approval row and the configured email to pass server authorization.
