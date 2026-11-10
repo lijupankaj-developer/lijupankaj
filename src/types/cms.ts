@@ -26,6 +26,9 @@ export type ThemeSettings = {
 export type NavigationItem = { id: string; label: string; href: string; visible: boolean };
 export type ExperienceItem = { id: string; period: string; location: string; title: string; company: string; summary: string };
 export type CapabilityItem = { id: string; title: string; summary: string };
+export type ExpertiseIcon = "infrastructure" | "enterprise" | "ai" | "web" | "security" | "creative";
+export type ExpertiseGroup = { id: string; icon: ExpertiseIcon; title: string; summary: string; items: string[] };
+export type SkillGroup = { id: string; name: string; items: string[] };
 export type EducationItem = { id: string; qualification: string; institution: string };
 export type InternalApp = {
   id: string;
@@ -39,26 +42,31 @@ export type InternalApp = {
 };
 
 export type SiteSections = {
-  visibility: { profile: boolean; experience: boolean; portfolio: boolean; capabilities: boolean; innovation: boolean; education: boolean; contact: boolean };
+  visibility: { profile: boolean; experience: boolean; expertise: boolean; portfolio: boolean; capabilities: boolean; skills: boolean; innovation: boolean; education: boolean; contact: boolean };
   navigation: { items: NavigationItem[]; resumeLabel: string };
   hero: {
     eyebrow: string;
     title: string;
     positioning: string;
+    supportingText: string;
     introduction: string;
     location: string;
     primaryButtonLabel: string;
+    workButtonLabel: string;
+    contactButtonLabel: string;
     resumeButtonLabel: string;
     profileMediaId: number | null;
     profileFallbackUrl: string;
   };
   profile: { heading: string; lead: string; paragraphs: string[]; pillars: string[] };
   experience: { heading: string; items: ExperienceItem[] };
+  expertise: { heading: string; introduction: string; groups: ExpertiseGroup[] };
+  skills: { heading: string; introduction: string; groups: SkillGroup[] };
   portfolio: { heading: string; introduction: string; emptyMessage: string };
   capabilities: { heading: string; items: CapabilityItem[]; tools: string[] };
   innovation: { heading: string; introduction: string; accessNote: string; apps: InternalApp[] };
   education: { heading: string; items: EducationItem[]; languages: string[] };
-  contact: { heading: string; email: string; phone: string; location: string; buttonLabel: string };
+  contact: { eyebrow: string; heading: string; email: string; phone: string; location: string; buttonLabel: string };
   footer: { copyright: string; descriptor: string };
   resume: { mediaId: number | null; fallbackUrl: string; downloadLabel: string };
 };

@@ -1,6 +1,6 @@
 # Liju Pankaj — Portfolio CMS
 
-Full-stack professional portfolio for Liju Pankaj, Senior Graphic Designer. The public site is driven by an atomic published snapshot; all draft content, project media and administrative operations stay behind Supabase Auth, PostgreSQL Row Level Security and server-side authorization.
+Full-stack professional portfolio for Liju Pankaj, IT & Creative Technology Leader. The public site is driven by an atomic published snapshot; all draft content, project media and administrative operations stay behind Supabase Auth, PostgreSQL Row Level Security and server-side authorization.
 
 Last updated: 27 August 2026 (Asia/Dubai)
 
@@ -12,7 +12,7 @@ The full-stack release is live at [lijupankaj.com](https://lijupankaj.com/) and 
 - Nine published project case studies with verified, project-specific media
 - Four approved project records retained as private drafts until matching public-safe artwork is ready
 - Neutral “Image coming soon” state when a project has no assigned media
-- Structured editors for hero, profile, experience, capabilities, innovation, education, languages, contact, navigation, footer and files
+- Structured editors for hero, profile, expertise, technical skills, experience, capabilities, innovation, education, languages, contact, navigation, footer and files
 - Portfolio/category CRUD, duplication, draft/publish state, feature flag and drag ordering
 - Private media library with magic-byte validation, sanitized SVG, size limits, SHA-256 duplicate prevention and WebP variants
 - Project-specific image assignment, cover selection, captions, alt text, focal points, ordering, replacement and safe deletion checks
@@ -20,6 +20,7 @@ The full-stack release is live at [lijupankaj.com](https://lijupankaj.com/) and 
 - Administrator-only login, logout and password recovery; public registration is disabled
 - Atomic publication history, public read-only snapshot and persistent last-published file fallback
 - Section reveal and restrained parallax motion with `prefers-reduced-motion` support
+- Light, dark and system themes (dark applies to the public site only), mobile menu
 - Header reading-progress indicator, SEO metadata, structured data, sitemap and robots configuration
 - Multi-stage non-root Docker image, automatic migrations and health endpoint
 
@@ -68,3 +69,7 @@ docker build -t liju-portfolio-cms:preview .
 - [Published portfolio and innovation register](portfolio_shortlist.md)
 
 Production health is available at `GET https://lijupankaj.com/api/health`. Keep the safety branch, old Pages configuration and pre-cutover DNS values documented until a rollback is no longer operationally useful.
+
+## November 2026 repositioning
+
+The site presents Liju Pankaj as an IT & Creative Technology Leader while keeping all design work. New CMS sections (Expertise, Technical skills), three hero buttons and a contact eyebrow have safe defaults, so older published snapshots keep working. The wording itself lives in the CMS: `scripts/cms-profile-2026-11.mjs` writes it to the **private draft** only (dry run by default, `--apply` to write) and regroups portfolio categories without deleting anything; the owner then reviews `/admin` and publishes. Never mention or link Nebulix or any private business on this site.

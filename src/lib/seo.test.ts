@@ -3,12 +3,12 @@ import { defaultSnapshot } from "@/content/defaults";
 import { buildStructuredData, seoDescription, seoMetadata, seoTitle, serializeJsonLd, siteUrl } from "@/lib/seo";
 
 describe("portfolio SEO", () => {
-  it("targets the supported senior graphic design position and canonical domain", () => {
-    expect(seoTitle).toContain("Senior Graphic Designer Dubai");
-    expect(seoDescription).toContain("24 years");
+  it("targets the IT and creative technology position and canonical domain", () => {
+    expect(seoTitle).toBe("Liju Pankaj | IT & Creative Technology Leader | UAE");
+    expect(seoDescription).toContain("enterprise software");
     expect(seoMetadata.alternates?.canonical).toBe("/");
     expect(seoMetadata.robots).toMatchObject({ index: true, follow: true });
-    expect(seoMetadata.openGraph).toMatchObject({ url: "/", siteName: "Liju Pankaj Design Portfolio" });
+    expect(seoMetadata.openGraph).toMatchObject({ url: "/", siteName: "Liju Pankaj" });
   });
 
   it("describes the person and visible portfolio without unsupported projects", () => {
@@ -26,5 +26,8 @@ describe("portfolio SEO", () => {
     expect(json).toContain(`${siteUrl}/api/media/63`);
     expect(json).not.toMatch(/Fujifilm|FEAST Brochure|RASASI Presentation|ENBD EDM Generator/i);
     expect(json).not.toContain("<");
+    expect(json).toContain('"jobTitle":"IT & Creative Technology Professional"');
+    expect(json).toContain('"ERP Systems"');
+    expect(json).not.toMatch(/worksFor|nebulix|eleven777/i);
   });
 });

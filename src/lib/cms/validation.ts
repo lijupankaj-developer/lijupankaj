@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { defaultExpertise, defaultSkills } from "@/content/defaults";
 
 const cleanText = (max: number) => z.string().max(max).transform((value) => value.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, "").trim());
 const requiredText = (min: number, max: number) => z.string().min(min).max(max).transform((value) => value.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, "").trim());
@@ -34,6 +35,8 @@ export const themeSchema = z.object({
 const navigationItemSchema = z.object({ id: identifier, label: cleanText(40), href: z.string().regex(/^#[a-z0-9-]+$/), visible: z.boolean() });
 const experienceItemSchema = z.object({ id: identifier, period: cleanText(40), location: cleanText(80), title: cleanText(160), company: cleanText(160), summary: cleanText(1200) });
 const capabilityItemSchema = z.object({ id: identifier, title: cleanText(120), summary: cleanText(500) });
+const expertiseGroupSchema = z.object({ id: identifier, icon: z.enum(["infrastructure", "enterprise", "ai", "web", "security", "creative"]), title: cleanText(120), summary: cleanText(300), items: z.array(cleanText(100)).max(16) });
+const skillGroupSchema = z.object({ id: identifier, name: cleanText(80), items: z.array(cleanText(80)).max(24) });
 const educationItemSchema = z.object({ id: identifier, qualification: cleanText(160), institution: cleanText(200) });
 const internalAppSchema = z.object({
   id: identifier,
@@ -47,19 +50,21 @@ const internalAppSchema = z.object({
 });
 
 export const siteSectionsSchema = z.object({
-  visibility: z.object({ profile: z.boolean(), experience: z.boolean(), portfolio: z.boolean(), capabilities: z.boolean(), innovation: z.boolean(), education: z.boolean(), contact: z.boolean() }),
+  visibility: z.object({ profile: z.boolean(), experience: z.boolean(), expertise: z.boolean().default(true), portfolio: z.boolean(), capabilities: z.boolean(), skills: z.boolean().default(true), innovation: z.boolean(), education: z.boolean(), contact: z.boolean() }),
   navigation: z.object({ items: z.array(navigationItemSchema).min(1).max(12), resumeLabel: cleanText(50) }),
   hero: z.object({
-    eyebrow: cleanText(160), title: cleanText(160), positioning: cleanText(240), introduction: cleanText(1200), location: cleanText(120),
-    primaryButtonLabel: cleanText(50), resumeButtonLabel: cleanText(50), profileMediaId: mediaId, profileFallbackUrl: cleanText(240)
+    eyebrow: cleanText(160), title: cleanText(160), positioning: cleanText(240), supportingText: cleanText(300).default(""), introduction: cleanText(1200), location: cleanText(120),
+    primaryButtonLabel: cleanText(50), workButtonLabel: cleanText(50).default("View My Work"), contactButtonLabel: cleanText(50).default("Get in Touch"), resumeButtonLabel: cleanText(50), profileMediaId: mediaId, profileFallbackUrl: cleanText(240)
   }),
   profile: z.object({ heading: cleanText(200), lead: cleanText(1200), paragraphs: z.array(cleanText(1500)).max(8), pillars: z.array(cleanText(80)).max(8) }),
   experience: z.object({ heading: cleanText(200), items: z.array(experienceItemSchema).max(20) }),
+  expertise: z.object({ heading: cleanText(200), introduction: cleanText(800), groups: z.array(expertiseGroupSchema).max(12) }).default(() => structuredClone(defaultExpertise)),
+  skills: z.object({ heading: cleanText(200), introduction: cleanText(800), groups: z.array(skillGroupSchema).max(12) }).default(() => structuredClone(defaultSkills)),
   portfolio: z.object({ heading: cleanText(200), introduction: cleanText(800), emptyMessage: cleanText(600) }),
   capabilities: z.object({ heading: cleanText(200), items: z.array(capabilityItemSchema).max(24), tools: z.array(cleanText(100)).max(60) }),
   innovation: z.object({ heading: cleanText(200), introduction: cleanText(1200), accessNote: cleanText(600), apps: z.array(internalAppSchema).max(20) }),
   education: z.object({ heading: cleanText(200), items: z.array(educationItemSchema).max(20), languages: z.array(cleanText(80)).max(20) }),
-  contact: z.object({ heading: cleanText(240), email: z.string().email().max(254), phone: cleanText(40), location: cleanText(120), buttonLabel: cleanText(60) }),
+  contact: z.object({ eyebrow: cleanText(160).default("Get in touch"), heading: cleanText(240), email: z.string().email().max(254), phone: cleanText(40), location: cleanText(120), buttonLabel: cleanText(60) }),
   footer: z.object({ copyright: cleanText(120), descriptor: cleanText(200) }),
   resume: z.object({ mediaId, fallbackUrl: cleanText(240), downloadLabel: cleanText(60) })
 });

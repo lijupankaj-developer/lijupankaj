@@ -63,6 +63,10 @@ Replacement uploads create a new immutable media record and reassign the draft p
 
 **Website Style** exposes only curated fonts and bounded tokens. The live preview is local to the draft editor. Use **Save Draft**, then **Publish Changes**. **Reset to Default Theme** requires confirmation and remains a draft until published.
 
+## Expertise & technical skills
+
+Edit these under **Website content → Expertise & technical skills**. Each expertise area has a title, short summary, icon and one item per line. List only technologies you actually use; do not add proficiency percentages or certifications you do not hold. Turn either section off under **Public sections**.
+
 ## AI & Creative Innovation
 
 Internal applications are private case studies, not public demos. Every card must retain the access notice and use **Open Private Application** for its external link. Visitors without an authorized Eleven777 account may see only a login or access-denied screen.

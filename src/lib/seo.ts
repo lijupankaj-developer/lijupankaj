@@ -2,19 +2,22 @@ import type { Metadata } from "next";
 import type { PublishedSnapshot } from "@/types/cms";
 
 export const siteUrl = "https://lijupankaj.com";
-export const seoTitle = "Senior Graphic Designer Dubai | Liju Pankaj";
-export const seoDescription = "Senior Graphic Designer in Dubai and the UAE with 24 years of experience across brand identity, campaigns, events, exhibitions, banking and hospitality design.";
+export const seoTitle = "Liju Pankaj | IT & Creative Technology Leader | UAE";
+export const seoDescription = "Liju Pankaj is a UAE-based IT and creative technology professional specializing in enterprise software, ERP, AI automation, cloud infrastructure, digital transformation, and design.";
+export const siteName = "Liju Pankaj";
+export const knowsAbout = ["Information Technology", "Enterprise Software", "ERP Systems", "Software Architecture", "Artificial Intelligence", "Business Automation", "Digital Transformation", "Cloud Infrastructure", "Cybersecurity", "Web Development", "UI/UX Design", "Graphic Design", "Brand Identity", "Event & Exhibition Design"];
 
 export const seoMetadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  applicationName: "Liju Pankaj Design Portfolio",
-  title: { default: seoTitle, template: "%s | Liju Pankaj" },
+  applicationName: siteName,
+  title: { absolute: seoTitle, template: "%s | Liju Pankaj" },
   description: seoDescription,
   alternates: { canonical: "/" },
   authors: [{ name: "Liju Pankaj", url: siteUrl }],
   creator: "Liju Pankaj",
   publisher: "Liju Pankaj",
-  category: "Graphic Design Portfolio",
+  category: "Technology and Creative Portfolio",
+  keywords: ["Liju Pankaj", "Liju Pankaj UAE", "IT professional", "enterprise software", "ERP", "AI automation", "digital transformation", "creative technology", "graphic design"],
   icons: [
     { rel: "icon", url: "/favicon.svg", type: "image/svg+xml" },
     { rel: "icon", url: "/favicon.png", type: "image/png" },
@@ -23,10 +26,10 @@ export const seoMetadata: Metadata = {
     title: seoTitle,
     description: seoDescription,
     url: "/",
-    siteName: "Liju Pankaj Design Portfolio",
+    siteName,
     type: "profile",
     locale: "en_AE",
-    images: [{ url: "/opengraph-image.jpg", width: 1200, height: 630, alt: "Liju Pankaj - Senior Graphic Designer in Dubai" }],
+    images: [{ url: "/opengraph-image.jpg", width: 1200, height: 630, alt: "Liju Pankaj, IT & Creative Technology Leader, United Arab Emirates" }],
   },
   twitter: {
     card: "summary_large_image",
@@ -62,7 +65,7 @@ export function buildStructuredData(snapshot: PublishedSnapshot) {
       name: project.name,
       description: project.overview,
       dateCreated: project.year,
-      genre: project.category?.name ?? "Graphic Design",
+      genre: project.category?.name ?? "Design",
       creator: { "@id": personId },
       image: project.images[0] ? `${siteUrl}/api/media/${project.images[0].media.id}` : undefined,
     },
@@ -75,8 +78,8 @@ export function buildStructuredData(snapshot: PublishedSnapshot) {
         "@type": "WebSite",
         "@id": `${siteUrl}/#website`,
         url: siteUrl,
-        name: "Liju Pankaj Design Portfolio",
-        alternateName: "Liju Pankaj - Senior Graphic Designer",
+        name: siteName,
+        alternateName: "Liju Pankaj - IT & Creative Technology Leader",
         description: seoDescription,
         inLanguage: "en-AE",
       },
@@ -98,33 +101,28 @@ export function buildStructuredData(snapshot: PublishedSnapshot) {
         name: "Liju Pankaj",
         url: siteUrl,
         image: profileImage,
-        jobTitle: "Senior Graphic Designer",
-        description: sections.hero.introduction,
+        jobTitle: "IT & Creative Technology Professional",
+        description: "UAE-based technology professional specializing in enterprise software, AI, digital transformation, IT infrastructure, and creative technology.",
         email: `mailto:${sections.contact.email}`,
-        telephone: sections.contact.phone,
-        address: {
-          "@type": "PostalAddress",
-          addressLocality: "Dubai",
-          addressCountry: "AE",
-        },
-        worksFor: { "@type": "Organization", name: "Eleven777 Advertising LLC" },
+        address: { "@type": "PostalAddress", addressCountry: "AE" },
+        homeLocation: { "@type": "Country", name: "United Arab Emirates" },
         knowsLanguage: sections.education.languages,
-        knowsAbout: sections.capabilities.items.map((item) => item.title),
+        knowsAbout,
         alumniOf: sections.education.items.map((item) => ({
           "@type": "EducationalOrganization",
           name: item.institution,
         })),
         hasOccupation: {
           "@type": "Occupation",
-          name: "Senior Graphic Designer",
+          name: "IT & Creative Technology Professional",
           occupationLocation: { "@type": "Country", name: "United Arab Emirates" },
-          skills: sections.capabilities.items.map((item) => item.title).join(", "),
+          skills: sections.expertise.groups.map((group) => group.title).join(", "),
         },
       },
       {
         "@type": "ItemList",
         "@id": `${siteUrl}/#selected-work`,
-        name: "Selected Graphic Design Work",
+        name: "Selected Work",
         numberOfItems: portfolioItems.length,
         itemListElement: portfolioItems,
       },

@@ -23,6 +23,26 @@ describe("published snapshot boundary", () => {
     expect(defaultSnapshot.projects).toEqual([]);
   });
 
+  it("upgrades a snapshot published before the expertise and skills sections existed", () => {
+    const legacy = structuredClone(defaultSnapshot) as unknown as { sections: Record<string, unknown> & { hero: Record<string, unknown>; contact: Record<string, unknown>; visibility: Record<string, unknown> } };
+    delete legacy.sections.expertise; delete legacy.sections.skills;
+    delete legacy.sections.hero.supportingText; delete legacy.sections.hero.workButtonLabel; delete legacy.sections.hero.contactButtonLabel;
+    delete legacy.sections.contact.eyebrow; delete legacy.sections.visibility.expertise; delete legacy.sections.visibility.skills;
+    const parsed = publishedSnapshotSchema.safeParse(legacy);
+    expect(parsed.success).toBe(true);
+    if (!parsed.success) return;
+    expect(parsed.data.sections.expertise.groups).toHaveLength(6);
+    expect(parsed.data.sections.skills.groups.length).toBeGreaterThan(0);
+    expect(parsed.data.sections.visibility.expertise).toBe(true);
+    expect(parsed.data.sections.hero.workButtonLabel).toBe("View My Work");
+  });
+
+  it("rejects unknown expertise icons", () => {
+    const snapshot = structuredClone(defaultSnapshot) as unknown as { sections: { expertise: { groups: Array<{ icon: string }> } } };
+    snapshot.sections.expertise.groups[0].icon = "javascript:alert(1)";
+    expect(publishedSnapshotSchema.safeParse(snapshot).success).toBe(false);
+  });
+
   it("requires meaningful alt text for every published project image", () => {
     const snapshot = structuredClone(defaultSnapshot);
     snapshot.projects = [{
